@@ -2,7 +2,7 @@
 redbull_dl is a tool to download movies from the Red Bull TV.
 
 # Requirements
-## System package
+## System packages
 * python3
 * ffmpeg
 ## Python packages
