@@ -58,13 +58,10 @@ __logger.setLevel(logging.INFO)
 
 
 def main():
-    parser = ArgumentParser(description='A tool to download movies from the Red Bull TV.',
-                            formatter_class=RawTextHelpFormatter,
-                            add_help=False)
-    parser.add_argument('-h', '--help', action='help', help='Show this help message.')
+    parser = ArgumentParser(description='A tool to download movies from the Red Bull TV.', add_help=False)
+    parser.add_argument('-h', '--help', action='help', help='Show this help message and exit.')
     parser.add_argument('--debug', help='Turn debug on.', action='store_true')
-    parser.add_argument('--dry-run', help='Show what should be done but don\'t do anything.',
-                        action='store_true')
+    parser.add_argument('--dry-run', help='Show what should be done but don\'t do anything.', action='store_true')
     parser.add_argument('--list-formats', help='Display available formats.', action='store_true')
     parser.add_argument('--video', help='Format of the video stream.', metavar='RESOLUTION')
     parser.add_argument('--audio', help='Format of the audio stream.', metavar='LANGUAGE')
@@ -83,8 +80,8 @@ def main():
 
     playlist = m3u8.load(url)
 
-    medias = {parsed['media'][0]['language']: parsed for parsed in (m3u8.parse('{}'.format(a_media))
-                                                                    for a_media in playlist.media)}
+    medias = {parsed['media'][0]['language']: parsed
+              for parsed in (m3u8.parse('{}'.format(a_media)) for a_media in playlist.media)}
     __logger.debug('medias: {}'.format(medias))
 
     playlists = {parsed['playlists'][0]['stream_info']['resolution']: parsed
@@ -99,15 +96,17 @@ def main():
                                                                                   for res in playlists.keys())}.items(),
                                                            key=lambda x: x[0])).items())))
         print('AUDIO:')
-        print('- {}'.format('\n- '.join('{} ({})'.format(value, key) for key, value in
-                                        {medias[key]['media'][0]['name']: medias[key]['media'][0]['language']
-                                         for key in medias
-                                         if 'audio' == medias[key]['media'][0]['type'].lower()}.items())))
+        print('- {}'.format(
+            '\n- '.join('{} ({})'.format(value, key)
+                        for key, value in {medias[key]['media'][0]['name']: medias[key]['media'][0]['language']
+                                           for key in medias
+                                           if 'audio' == medias[key]['media'][0]['type'].lower()}.items())))
         print('SUBTITLES:')
-        print('- {}'.format('\n- '.join('{} ({})'.format(value, key) for key, value in
-                                        {medias[key]['media'][0]['name']: medias[key]['media'][0]['language']
-                                         for key in medias
-                                         if 'subtitles' == medias[key]['media'][0]['type'].lower()}.items())))
+        print('- {}'.format(
+            '\n- '.join('{} ({})'.format(value, key)
+                        for key, value in {medias[key]['media'][0]['name']: medias[key]['media'][0]['language']
+                                           for key in medias
+                                           if 'subtitles' == medias[key]['media'][0]['type'].lower()}.items())))
     else:
         if (None is args.audio) and (None is args.video):
             raise parser.error('Video or audio format is required.')

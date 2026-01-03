@@ -18,7 +18,7 @@ positional arguments:
   ID                    ID of the movie to download.
 
 options:
-  -h, --help            Show this help message.
+  -h, --help            Show this help message and exit.
   --debug               Turn debug on.
   --dry-run             Show what should be done but don't do anything.
   --list-formats        Display available formats.
