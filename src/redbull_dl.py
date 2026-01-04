@@ -4,7 +4,7 @@
 import logging
 import sys
 import traceback
-from argparse import ArgumentParser, RawTextHelpFormatter, SUPPRESS
+from argparse import ArgumentParser
 import urllib.parse
 import urllib.request
 import m3u8
